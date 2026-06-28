@@ -1,10 +1,6 @@
 {
-  "builds": [
-    { "src": "chat.py", "use": "@vercel/python" },
-    { "src": "index.html", "use": "@vercel/static" }
-  ],
-  "routes": [
-    { "src": "/chat", "dest": "chat.py" },
-    { "src": "/(.*)", "dest": "index.html" }
+  "rewrites": [
+    { "source": "/api/chat", "destination": "/chat.py" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
