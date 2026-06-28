@@ -48,7 +48,7 @@ async function send() {
   history.push({ role: 'user', content: text });
   const typing = addMsg('bot', '...');
   try {
-    const res = await fetch('/api/chat', {
+    const res = await fetch('/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ messages: history })
