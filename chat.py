@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler
-import json, urllib.request
+import json, urllib.request, os
 
-API_KEY = "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"
+API_KEY = os.environ.get("GROQ_API_KEY")
 
 class handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
