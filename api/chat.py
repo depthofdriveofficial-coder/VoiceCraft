@@ -1,5 +1,5 @@
 from http.server import BaseHTTPRequestHandler
-import json, urllib.request, os
+import json, os, http.client
 
 class handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
@@ -19,20 +19,16 @@ class handler(BaseHTTPRequestHandler):
                 "model": "llama-3.3-70b-versatile",
                 "messages": body.get("messages", []),
                 "max_tokens": 1000
-            }).encode()
+            })
 
-            req = urllib.request.Request(
-                "https://api.groq.com/openai/v1/chat/completions",
-                data=payload,
-                headers={
-                    "Authorization": f"Bearer {api_key}",
-                    "Content-Type": "application/json"
-                }
-            )
+            conn = http.client.HTTPSConnection("api.groq.com")
+            conn.request("POST", "/openai/v1/chat/completions", payload, {
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json"
+            })
 
-            with urllib.request.urlopen(req) as res:
-                data = json.loads(res.read())
-
+            res = conn.getresponse()
+            data = json.loads(res.read().decode())
             reply = data["choices"][0]["message"]["content"]
 
             self.send_response(200)
