@@ -4,7 +4,7 @@
     { "src": "index.html", "use": "@vercel/static" }
   ],
   "routes": [
-    { "src": "/api/chat", "dest": "chat.py" },
+    { "src": "/chat", "dest": "chat.py" },
     { "src": "/(.*)", "dest": "index.html" }
   ]
 }
